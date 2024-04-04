@@ -65,14 +65,14 @@ final class AuthenticationManager {
             }
             self.getUserStatus()
             print("Signing in ...")
-            print("userData: \(self.appState.value.userData)")
+            print("userData: \(self.appState.value.userData.givenName)")
         }
     }
     
     func signOut() {
         GIDSignIn.sharedInstance.signOut()
         self.getUserStatus()
-        print("outData: \(self.appState.value.userData)")
+        print("outData: \(self.appState.value.userData.givenName)")
     }
 
 }

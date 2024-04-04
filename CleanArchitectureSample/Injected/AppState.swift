@@ -16,11 +16,7 @@ struct AppState: Equatable {
 }
 
 extension AppState {
-    class UserData: Equatable, ObservableObject {
-        static func == (lhs: AppState.UserData, rhs: AppState.UserData) -> Bool {
-            return lhs.userEmail == rhs.userEmail
-        }
-        
+    struct UserData: Equatable {
         var givenName: String = ""
         var isLoggedIn: Bool = false
         var userEmail: String = ""

@@ -6,21 +6,49 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RootView: View {
     private let container: DIContainer
     
+    @State private var isLoggin: Bool = false
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    private var userBinding: Binding<Bool> {
+        $isLoggin.dispatched(to: container.appState, \.userData.isLoggedIn)
+    }
+
     init(container: DIContainer) {
         self.container = container
     }
     
     var body: some View {
-        if container.appState.value.userData.isLoggedIn {
-            ContentView(container: container)
-        } else {
-            SignInView()
-                .inject(container)
+        Group {
+            if isLoggin {
+                ContentView(container: container)
+            } else {
+                SignInView()
+                    .inject(container)
+            }
         }
+        .onReceive(loginStatusUpdate) {isLoggin = $0}
+        VStack {
+            Button("Debug") {
+                print("debug: \(isLoggin)")
+                print("debug1: \(container.appState.value.userData.isLoggedIn)")
+            }
+            Button("logout") {
+                container.interactors.authenInteractor!.signOut()
+            }
+        }
+        
+    }
+}
+
+extension RootView {
+    fileprivate var loginStatusUpdate: AnyPublisher<Bool, Never> {
+        container.appState.updates(for: \.userData.isLoggedIn)
     }
 }
 

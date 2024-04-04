@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import GoogleSignIn
 import GoogleSignInSwift
 
@@ -13,6 +14,11 @@ import GoogleSignInSwift
 struct SignInView: View {
     
     @Environment(\.injected) private var container: DIContainer
+    
+    @State private var userData: String = ""
+    private var userBinding: Binding<String> {
+        $userData.dispatched(to: container.appState, \.userData.givenName)
+    }
 
     var body: some View {
         VStack {
@@ -23,11 +29,15 @@ struct SignInView: View {
                     }
                 }
             }
-            Button("Sign Out") {
-                container.interactors.authenInteractor!.signOut()
-            }
-            .padding()
         }
+        .onReceive(nameUpdate) {userData = $0}
+    }
+}
+
+
+extension SignInView {
+    fileprivate var nameUpdate: AnyPublisher<String, Never> {
+        container.appState.updates(for: \.userData.givenName)
     }
 }
 
