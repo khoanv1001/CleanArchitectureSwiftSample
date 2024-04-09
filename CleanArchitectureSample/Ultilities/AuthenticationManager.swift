@@ -30,6 +30,7 @@ final class AuthenticationManager {
         } else {
             self.appState.bulkUpdate { state in
                 state.userData.isLoggedIn = false
+                state.postData = AppState.PostData(step: .title, title: "", imageURL: [""], detail: "")
                 state.userData.givenName = "Not Logged In"
             }
         }

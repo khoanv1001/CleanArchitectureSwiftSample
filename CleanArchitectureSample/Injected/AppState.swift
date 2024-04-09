@@ -41,7 +41,7 @@ func == (lhs: AppState, rhs: AppState) -> Bool {
 
 enum AddPostStep {
     case title
-//    case imageURL
+    case imageURL
 //    case detail
 //    case status
     case done
