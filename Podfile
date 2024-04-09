@@ -8,4 +8,5 @@ target 'CleanArchitectureSample' do
   pod 'Alamofire'
   pod 'GoogleSignIn', '~> 7.1'
   pod 'GoogleSignInSwiftSupport', '~> 7.1'
+  pod 'RxCocoa'
 end

@@ -5,54 +5,43 @@
 //  Created by Nguyen Viet Khoa on 03/04/2024.
 //
 
-import SwiftUI
-import Combine
+import RxSwift
+import RxCocoa
 
-typealias Store<State> = CurrentValueSubject<State, Never>
+typealias Store<State> = BehaviorSubject<State>
 
 extension Store {
     
-    subscript<T>(keyPath: WritableKeyPath<Output, T>) -> T where T: Equatable {
-        get { value[keyPath: keyPath] }
+    subscript<T>(keyPath: WritableKeyPath<Element, T>) -> T where T: Equatable {
+        get { try! value()[keyPath: keyPath] }
         set {
-            var value = self.value
-            if value[keyPath: keyPath] != newValue {
-                value[keyPath: keyPath] = newValue
-                self.value = value
+            do {
+                var newValue = try value()
+                newValue[keyPath: keyPath] = newValue as! T
+                onNext(newValue)
+            } catch {
+                // Handle the error, such as logging or reporting it
+                print("Error accessing value from store: \(error)")
             }
         }
     }
     
-    func bulkUpdate(_ update: (inout Output) -> Void) {
-        var value = self.value
-        update(&value)
-        self.value = value
+    func bulkUpdate(_ update: @escaping (inout Element) -> Void) {
+        var newValue = try! value()
+        update(&newValue)
+        onNext(newValue)
     }
     
-    func updates<Value>(for keyPath: KeyPath<Output, Value>) ->
-        AnyPublisher<Value, Failure> where Value: Equatable {
-        return map(keyPath).removeDuplicates().eraseToAnyPublisher()
+    func updates<Value>(for keyPath: KeyPath<Element, Value>) -> Observable<Value> where Value: Equatable {
+        return map { $0[keyPath: keyPath] }
+            .distinctUntilChanged()
     }
 }
 
-extension Binding where Value: Equatable {
-    func dispatched<State>(to state: Store<State>,
-                           _ keyPath: WritableKeyPath<State, Value>) -> Self {
-        return onSet { state[keyPath] = $0 }
-    }
-}
-
-extension Binding where Value: Equatable {
-    typealias ValueClosure = (Value) -> Void
-    
-    func onSet(_ perform: @escaping ValueClosure) -> Self {
-        return .init(get: { () -> Value in
-            self.wrappedValue
-        }, set: { value in
-            if self.wrappedValue != value {
-                self.wrappedValue = value
-            }
-            perform(value)
+extension BehaviorRelay where Element: Equatable {
+    func dispatched(to store: Store<Element>, _ keyPath: WritableKeyPath<Element, Element>) -> Disposable {
+        return subscribe(onNext: { value in
+            store[keyPath] = value
         })
     }
 }

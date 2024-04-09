@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		28F05078AC1E2C48991C6488 /* Pods_CleanArchitectureSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE16929C401C7264928575AD /* Pods_CleanArchitectureSample.framework */; };
+		E34A0B6C2BC3C9600055DB02 /* APICall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0B6B2BC3C9600055DB02 /* APICall.swift */; };
+		E34A0B6F2BC3E50C0055DB02 /* PostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0B6E2BC3E50C0055DB02 /* PostRepository.swift */; };
 		E3834C932BBDADD700F90B7F /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3834C922BBDADD700F90B7F /* AuthenticationManager.swift */; };
 		E3834C962BBDB4AB00F90B7F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3834C952BBDB4AB00F90B7F /* SignInView.swift */; };
 		E3834C982BBDBD9600F90B7F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3834C972BBDBD9600F90B7F /* RootView.swift */; };
@@ -23,14 +25,14 @@
 		E3D01F7B2BBCF30900F3BF49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D01F7A2BBCF30900F3BF49 /* ContentView.swift */; };
 		E3D01F7D2BBCF30B00F3BF49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3D01F7C2BBCF30B00F3BF49 /* Assets.xcassets */; };
 		E3D01F802BBCF30B00F3BF49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3D01F7F2BBCF30B00F3BF49 /* Preview Assets.xcassets */; };
-		E3D01F822BBCF30B00F3BF49 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D01F812BBCF30B00F3BF49 /* Persistence.swift */; };
-		E3D01F852BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3D01F832BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		02DEC0CD5EDE7C33617F20B8 /* Pods-CleanArchitectureSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanArchitectureSample.debug.xcconfig"; path = "Target Support Files/Pods-CleanArchitectureSample/Pods-CleanArchitectureSample.debug.xcconfig"; sourceTree = "<group>"; };
 		1EBA4C52A7562D09B96B714E /* Pods-CleanArchitectureSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CleanArchitectureSample.release.xcconfig"; path = "Target Support Files/Pods-CleanArchitectureSample/Pods-CleanArchitectureSample.release.xcconfig"; sourceTree = "<group>"; };
 		AE16929C401C7264928575AD /* Pods_CleanArchitectureSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CleanArchitectureSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E34A0B6B2BC3C9600055DB02 /* APICall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICall.swift; sourceTree = "<group>"; };
+		E34A0B6E2BC3E50C0055DB02 /* PostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRepository.swift; sourceTree = "<group>"; };
 		E3834C922BBDADD700F90B7F /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E3834C942BBDB3D100F90B7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E3834C952BBDB4AB00F90B7F /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -48,8 +50,6 @@
 		E3D01F7A2BBCF30900F3BF49 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E3D01F7C2BBCF30B00F3BF49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3D01F7F2BBCF30B00F3BF49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E3D01F812BBCF30B00F3BF49 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		E3D01F842BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CleanArchitectureSample.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +81,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E34A0B6D2BC3E4EB0055DB02 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				E34A0B6E2BC3E50C0055DB02 /* PostRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		E393EEE62BBCF641002C9526 /* Injected */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +118,7 @@
 		E39DF5DA2BBD091200B29048 /* Ultilities */ = {
 			isa = PBXGroup;
 			children = (
+				E34A0B6B2BC3C9600055DB02 /* APICall.swift */,
 				E3834C922BBDADD700F90B7F /* AuthenticationManager.swift */,
 				E39DF5DB2BBD093800B29048 /* Store.swift */,
 			);
@@ -158,13 +167,12 @@
 			isa = PBXGroup;
 			children = (
 				E3834C942BBDB3D100F90B7F /* Info.plist */,
-				E3D01F812BBCF30B00F3BF49 /* Persistence.swift */,
 				E3D01F7C2BBCF30B00F3BF49 /* Assets.xcassets */,
-				E3D01F832BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodeld */,
 				E393EEE62BBCF641002C9526 /* Injected */,
 				E393EEEE2BBD03A6002C9526 /* Interactors */,
 				E393EEEB2BBCFCD7002C9526 /* Models */,
 				E3D01F7E2BBCF30B00F3BF49 /* Preview Content */,
+				E34A0B6D2BC3E4EB0055DB02 /* Repositories */,
 				E39DF5E12BBD33B200B29048 /* System */,
 				E39DF5E42BBD4F8900B29048 /* UI */,
 				E39DF5DA2BBD091200B29048 /* Ultilities */,
@@ -294,11 +302,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3D01F852BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodeld in Sources */,
 				E393EEE82BBCF656002C9526 /* AppState.swift in Sources */,
+				E34A0B6F2BC3E50C0055DB02 /* PostRepository.swift in Sources */,
 				E393EEEA2BBCF917002C9526 /* DI.swift in Sources */,
 				E39DF5DC2BBD093800B29048 /* Store.swift in Sources */,
-				E3D01F822BBCF30B00F3BF49 /* Persistence.swift in Sources */,
 				E39DF5E32BBD33DB00B29048 /* AppEnvironment.swift in Sources */,
 				E39DF5E02BBD0BAF00B29048 /* InteractorsContainer.swift in Sources */,
 				E3834C932BBDADD700F90B7F /* AuthenticationManager.swift in Sources */,
@@ -308,6 +315,7 @@
 				E3D01F7B2BBCF30900F3BF49 /* ContentView.swift in Sources */,
 				E3D01F792BBCF30900F3BF49 /* CleanArchitectureSampleApp.swift in Sources */,
 				E393EEED2BBCFCE5002C9526 /* Models.swift in Sources */,
+				E34A0B6C2BC3C9600055DB02 /* APICall.swift in Sources */,
 				E3834C982BBDBD9600F90B7F /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,19 +532,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		E3D01F832BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E3D01F842BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodel */,
-			);
-			currentVersion = E3D01F842BBCF30B00F3BF49 /* CleanArchitectureSample.xcdatamodel */;
-			path = CleanArchitectureSample.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E3D01F6D2BBCF30900F3BF49 /* Project object */;
 }

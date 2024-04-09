@@ -5,46 +5,33 @@
 //  Created by Nguyen Viet Khoa on 03/04/2024.
 //
 
+import RxSwift
+import RxCocoa
 import Combine
 import SwiftUI
 
 protocol PostInteractor {
-    func getPosts() -> AnyPublisher<Void, Error>
+    func getPosts() -> Observable<Post>
 }
 
 struct PostInteractorImpl: PostInteractor {
     let appState: Store<AppState>
     
-    init(appState: Store<AppState>) {
+    let postRepository: PostRepository
+    
+    init(appState: Store<AppState>, repository: PostRepository) {
         self.appState = appState
+        self.postRepository = repository
     }
     
-    func getPosts() -> AnyPublisher<Void, Error> {
-        let subject = PassthroughSubject<Void, Error>()
-            
-        // Simulate some behavior
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // Emit a completion event after 1 second
-            subject.send(completion: .finished)
-        }
-        
-        // Return the subject as AnyPublisher
-        return subject.eraseToAnyPublisher()
+    func getPosts() -> Observable<Post> {
+        return self.postRepository.getPost(id: "1")
     }
-    
 }
 
 struct StubPostInteractorImpl: PostInteractor {
-    func getPosts() -> AnyPublisher<Void, Error> {
-        let subject = PassthroughSubject<Void, Error>()
-            
-        // Simulate some behavior
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // Emit a completion event after 1 second
-            subject.send(completion: .finished)
-        }
-        
-        // Return the subject as AnyPublisher
-        return subject.eraseToAnyPublisher()
+    func getPosts() -> Observable<Post> {
+        let subject = PublishSubject<Post>()
+        return subject.asObservable()
     }
 }

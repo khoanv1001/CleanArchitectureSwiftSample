@@ -21,7 +21,7 @@ struct DIContainer: EnvironmentKey {
     }
     
     init(appState: AppState, interactors: Interactors) {
-        self.init(appState: Store<AppState>(appState), interactors: interactors)
+        self.init(appState: Store<AppState>(value: appState), interactors: interactors)
     }
     
     static var defaultValue: Self { Self.default }
@@ -42,7 +42,7 @@ extension View {
     
     func inject(_ appState: AppState,
                 _ interactors: Interactors) -> some View {
-        let container = DIContainer(appState: .init(appState),
+        let container = DIContainer(appState: .init(value: appState),
                                     interactors: interactors)
         return inject(container)
     }

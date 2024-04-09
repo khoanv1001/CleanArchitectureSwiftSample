@@ -8,11 +8,10 @@
 import Foundation
 
 import SwiftUI
-import Combine
 
 struct AppState: Equatable {
     var userData = UserData()
-    var post = PostData(step: .title, title: "", imageURL: [""], detail: "")
+    var postData = PostData(step: .title, title: "", imageURL: [""], detail: "")
 }
 
 extension AppState {
@@ -37,5 +36,13 @@ extension AppState {
 
 func == (lhs: AppState, rhs: AppState) -> Bool {
     return lhs.userData == rhs.userData &&
-        lhs.post == rhs.post
+        lhs.postData == rhs.postData
+}
+
+enum AddPostStep {
+    case title
+//    case imageURL
+//    case detail
+//    case status
+    case done
 }

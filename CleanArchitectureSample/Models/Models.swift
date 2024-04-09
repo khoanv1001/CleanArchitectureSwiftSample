@@ -8,20 +8,16 @@
 import Foundation
 
 struct Post: Equatable, Codable {
+    let id: String
     let title: String
-    let imageURL: [String]
+    let imageURL: String
     let detail: String
-    let status: Status
 
-    enum Status: String, Codable {
-        case Public
-        case Private
-    }
     
-    init(title: String, imageURL: [String], detail: String, status: Status) {
+    init(id: String, title: String, imageURL: String, detail: String) {
+        self.id = id
         self.title = title
         self.imageURL = imageURL
         self.detail = detail
-        self.status = status
     }
 }

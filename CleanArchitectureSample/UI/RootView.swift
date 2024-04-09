@@ -6,38 +6,56 @@
 //
 
 import SwiftUI
-import Combine
+import RxSwift
+import RxCocoa
 
 struct RootView: View {
     private let container: DIContainer
+    private var disposeBag = DisposeBag()
     
-    @State private var isLoggin: Bool = false
+    @State private var userData: AppState.UserData = AppState.UserData()
     
-    private var cancellables = Set<AnyCancellable>()
+    @State private var postData: AppState.PostData = AppState.PostData(step: AddPostStep.title, title: "", imageURL: [], detail: "")
     
-    private var userBinding: Binding<Bool> {
-        $isLoggin.dispatched(to: container.appState, \.userData.isLoggedIn)
-    }
-
     init(container: DIContainer) {
         self.container = container
     }
     
+    private func observeAppState() {
+        container.appState
+            .updates(for: \.userData)
+            .map { $0 } // Map the Bool value
+            .subscribe(onNext: { user in
+                self.userData = user
+            })
+            .disposed(by: disposeBag)
+        
+        container.appState
+            .updates(for: \.postData)
+            .map { $0 } // Map the Bool value
+            .subscribe(onNext: { post in
+                self.postData = post
+            })
+            .disposed(by: disposeBag)
+    }
+    
     var body: some View {
         Group {
-            if isLoggin {
-                ContentView(container: container)
+            if userData.isLoggedIn {
+                ContentView(postData: $postData)
+                    .inject(container)
             } else {
-                SignInView()
+                SignInView(userName: $userData.givenName)
                     .inject(container)
             }
         }
-        .onReceive(loginStatusUpdate) {isLoggin = $0}
+        .onAppear {
+            observeAppState()
+        }
         VStack {
-            Button("Debug") {
-                print("debug: \(isLoggin)")
-                print("debug1: \(container.appState.value.userData.isLoggedIn)")
-            }
+//            Button("Debug") {
+//                print("debug: \(userData.isLoggedIn)")
+//            }
             Button("logout") {
                 container.interactors.authenInteractor!.signOut()
             }
@@ -45,10 +63,3 @@ struct RootView: View {
         
     }
 }
-
-extension RootView {
-    fileprivate var loginStatusUpdate: AnyPublisher<Bool, Never> {
-        container.appState.updates(for: \.userData.isLoggedIn)
-    }
-}
-

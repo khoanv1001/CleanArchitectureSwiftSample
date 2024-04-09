@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct CleanArchitectureSampleApp: App {
-    let persistenceController = PersistenceController.shared
     
     let environment = AppEnvironment.bootstrap()
     var body: some Scene {

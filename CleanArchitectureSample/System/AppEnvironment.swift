@@ -12,34 +12,20 @@ struct AppEnvironment {
     let container: DIContainer
 }
 
-
 extension AppEnvironment {
     
     static func bootstrap() -> AppEnvironment {
-        let appState = Store<AppState>(AppState())
-        let session = configuredURLSession()
-        let am = AuthenticationManager(appState: appState)
-        let interactors = configuredInteractors(appState: appState)
+        let appState = Store<AppState>(value: AppState())
+        let postRepo = PostRepositoryImpl()
+        let interactors = configuredInteractors(appState: appState, repo: postRepo)
         let diContainer = DIContainer(appState: appState, interactors: interactors)
         return AppEnvironment(container: diContainer)
     }
-    
-    private static func configuredURLSession() -> URLSession {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 60
-        configuration.timeoutIntervalForResource = 120
-        configuration.waitsForConnectivity = true
-        configuration.httpMaximumConnectionsPerHost = 5
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
-        configuration.urlCache = .shared
-        return URLSession(configuration: configuration)
-    }
 
-    
-    private static func configuredInteractors(appState: Store<AppState>
+    private static func configuredInteractors(appState: Store<AppState>, repo: PostRepository
     ) -> Interactors {
         
-        let postInteractor = PostInteractorImpl(appState: appState)
+        let postInteractor = PostInteractorImpl(appState: appState, repository: repo)
         let authenInteractor = AuthenticationManager(appState: appState)
         return .init(postInteractor: postInteractor, authenInteractor: authenInteractor)
     }
